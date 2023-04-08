@@ -4,6 +4,8 @@
   "homepage": "https://myusername.github.io/tree42",
   "private": false,
   "dependencies": {
+    "@mui/lab": "^5.0.0-alpha.125",
+    "@mui/material": "^5.11.16",
     "@nanostores/react": "^0.4.1",
     "@types/node": "^16.18.23",
     "@types/react": "^18.0.33",
