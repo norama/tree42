@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/tree42/static/css/main.2f7b9029.css",
+    "main.js": "/tree42/static/js/main.04c61293.js",
+    "static/js/787.3cad76f8.chunk.js": "/tree42/static/js/787.3cad76f8.chunk.js",
+    "index.html": "/tree42/index.html",
+    "main.2f7b9029.css.map": "/tree42/static/css/main.2f7b9029.css.map",
+    "main.04c61293.js.map": "/tree42/static/js/main.04c61293.js.map",
+    "787.3cad76f8.chunk.js.map": "/tree42/static/js/787.3cad76f8.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2f7b9029.css",
+    "static/js/main.04c61293.js"
+  ]
+}
