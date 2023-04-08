@@ -11,6 +11,8 @@ export const nodeIds = atom<string[]>([])
 
 export const ROOT_ID = ''
 
+export const rootNode = () => Node(ROOT_ID)
+
 export const result = computed<TDeepNode, Atom<string[]>>(nodeIds, () => {
   const toDeepNode = (id: string) => ({
     data: Node(id).get().data,

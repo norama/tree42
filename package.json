@@ -4,6 +4,9 @@
   "homepage": "https://myusername.github.io/tree42",
   "private": false,
   "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/icons-material": "^5.11.16",
     "@mui/lab": "^5.0.0-alpha.125",
     "@mui/material": "^5.11.16",
     "@nanostores/react": "^0.4.1",
