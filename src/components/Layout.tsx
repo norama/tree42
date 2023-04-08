@@ -32,7 +32,7 @@ export const HeaderCell = ({ children }) => (
   </Box>
 )
 
-export const DataCell = ({ children }) => (
+export const DataCell = ({ children, color = 'inherit' }) => (
   <Box
     sx={{
       textAlign: 'center',
@@ -42,8 +42,11 @@ export const DataCell = ({ children }) => (
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
+      color: color,
     }}
   >
     {children}
   </Box>
 )
+
+export const DeleteCell = () => <DataCell color="red">X</DataCell>
