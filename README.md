@@ -1,3 +1,31 @@
+# Data Tree Application
+
+## Technology
+
+- React application using [Create React App](https://facebook.github.io/create-react-app/docs/getting-started)
+
+- State management: [nanostores](https://github.com/nanostores/nanostores) with [@nanostores/react](https://github.com/nanostores/react) for reactive hook `useStore()`, data tree is console logged upon changes
+
+- UI: [Material UI](https://mui.com/), [Tree View](https://mui.com/material-ui/react-tree-view/)
+
+## Demo
+
+[Demo](https://norama.github.io/tree42/) is deployed using [GitHup Pages](https://create-react-app.dev/docs/deployment#github-pages).
+
+## TODO
+
+- JSON input instead of hard-coded example
+
+- input data sanity check: child items should have same fields, intermediate single node check (should be 'has_nemesis' or 'has_secrete' and child item fields depend on this type node?)
+
+- field order is alphabetical, fix this to correspond to the screenshot
+
+- unit test for testing deletion
+
+- showing some transition upon deletion
+
+- export data with restoring those intermediate single nodes ('has_nemesis' or 'has_secrete', 'records') that are now removed from the tree for simplicity
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
