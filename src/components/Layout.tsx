@@ -20,7 +20,7 @@ export const HeaderCell = ({ children }) => (
       color: 'black',
       textAlign: 'center',
       fontSize: '16px',
-      width: '200px',
+      width: '120px',
       height: '70px',
       fontWeight: 600,
       display: 'flex',
@@ -37,7 +37,7 @@ export const DataCell = ({ children, color = 'inherit' }) => (
     sx={{
       textAlign: 'center',
       fontSize: '16px',
-      width: '200px',
+      width: '120px',
       height: '70px',
       display: 'flex',
       alignItems: 'center',
