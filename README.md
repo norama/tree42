@@ -26,6 +26,8 @@
 
 - export data with restoring those intermediate single nodes ('has_nemesis' or 'has_secrete', 'records') that are now removed from the tree for simplicity
 
+- Fix `[Violation] 'setTimeout' handler took <N>ms`
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
