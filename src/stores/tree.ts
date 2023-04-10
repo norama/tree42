@@ -29,21 +29,21 @@ export const initListeners = () => {
   })
 }
 
-export const deleteChild = (id: string, childId: string) => {
-  Node(id).setKey(
-    'childIds',
-    Node(id)
-      .get()
-      .childIds.filter((cid) => cid !== childId)
-  )
+export const deleteChild = async (id: string, childId: string) =>
+  new Promise<void>((resolve) => {
+    setTimeout(async () => {
+      Node(id).setKey(
+        'childIds',
+        Node(id)
+          .get()
+          .childIds.filter((cid) => cid !== childId)
+      )
 
-  // recursively delete children
-  // may take some time and has no implications to the UI
-  // therefore run with timeout
-  setTimeout(() => {
-    _deleteSubTree(childId)
-  }, 500)
-}
+      _deleteSubTree(childId)
+
+      resolve()
+    }, 0)
+  })
 
 const _deleteSubTree = (rootId: string) => {
   const deletedIds: string[] = []

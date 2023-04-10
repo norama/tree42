@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Box } from '@mui/material'
+import CircularProgress from '@mui/material/CircularProgress'
 
 export const HeaderRow = ({ children }) => (
   <Box display="flex" alignItems="center" paddingLeft="30px">
@@ -7,8 +8,14 @@ export const HeaderRow = ({ children }) => (
   </Box>
 )
 
-export const DataRow = ({ children }) => (
-  <Box display="flex" alignItems="center" padding="10px 0" borderBottom="1px grey solid">
+export const DataRow = ({ children, justifyContent = 'left' }) => (
+  <Box
+    display="flex"
+    alignItems="center"
+    justifyContent={justifyContent}
+    padding="10px 0"
+    borderBottom="1px grey solid"
+  >
     {children}
   </Box>
 )
@@ -50,3 +57,9 @@ export const DataCell = ({ children, color = 'inherit' }) => (
 )
 
 export const DeleteCell = () => <DataCell color="red">X</DataCell>
+
+export const Loading = () => (
+  <DataRow justifyContent="center">
+    <CircularProgress />
+  </DataRow>
+)

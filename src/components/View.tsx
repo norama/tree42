@@ -4,8 +4,9 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import TreeItem from '@mui/lab/TreeItem'
 import { useStore } from '@nanostores/react'
-import { Node, ROOT_ID, deleteChild, rootNode } from 'stores/tree'
-import { HeaderRow, HeaderCell, DataRow, DataCell, DeleteCell } from 'components/Layout'
+import { Node, rootNode } from 'stores/tree'
+import { HeaderRow, HeaderCell, DataRow, DataCell, DeleteCell, Loading } from 'components/Layout'
+import { useDeleteChild } from 'components/hooks'
 
 const View = () => {
   const root = useStore(rootNode())
@@ -18,14 +19,7 @@ const View = () => {
       multiSelect
       sx={{ height: 216, flexGrow: 1, width: '90vw', overflowY: 'auto' }}
     >
-      <TableHeader id={root.childIds[0]} />
-      {root.childIds.map((childId, index) => (
-        <Item
-          key={childId + '_' + index}
-          id={childId}
-          onDelete={() => deleteChild(ROOT_ID, childId)}
-        />
-      ))}
+      <TreeItemBody node={root} />
     </TreeView>
   ) : (
     <Empty />
@@ -36,20 +30,39 @@ const Empty = () => <div>EMPTY TREE</div>
 
 type IdProps = { id: string }
 type DeleteProps = { onDelete: () => void }
-type ItemProps = IdProps & DeleteProps
+type RowProps = IdProps & DeleteProps
+type ItemProps = IdProps & DeleteProps & { deleting: boolean }
+type TreeItemBodyProps = { node: TNode & IdProps }
 
-const Item = ({ id, onDelete }: ItemProps) => {
+const Item = ({ id, onDelete, deleting }: ItemProps) => {
   const node = useStore(Node(id))
 
-  return node.childIds.length ? (
+  return deleting ? (
+    <Loading />
+  ) : node.childIds.length ? (
     <TreeItem nodeId={id} label={<TableRow id={id} onDelete={onDelete} />}>
-      <TableHeader id={node.childIds[0]} />
-      {node.childIds.map((childId, index) => (
-        <Item key={childId + '_' + index} id={childId} onDelete={() => deleteChild(id, childId)} />
-      ))}
+      <TreeItemBody node={node} />
     </TreeItem>
   ) : (
     <TreeItem nodeId={id} label={<TableRow id={id} onDelete={onDelete} />} />
+  )
+}
+
+const TreeItemBody = ({ node }: TreeItemBodyProps) => {
+  const { deletingChildId, deleteChild } = useDeleteChild()
+
+  return (
+    <>
+      <TableHeader id={node.childIds[0]} />
+      {node.childIds.map((childId, index) => (
+        <Item
+          key={childId + '_' + index}
+          id={childId}
+          onDelete={() => deleteChild(node.id, childId)}
+          deleting={childId === deletingChildId}
+        />
+      ))}
+    </>
   )
 }
 
@@ -72,7 +85,7 @@ const TableHeader = ({ id }: IdProps) => {
   )
 }
 
-const TableRow = ({ id, onDelete }: ItemProps) => {
+const TableRow = ({ id, onDelete }: RowProps) => {
   const node = useStore(Node(id))
 
   return (
