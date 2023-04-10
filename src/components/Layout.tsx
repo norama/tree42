@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Box } from '@mui/material'
+import { Box, IconButton } from '@mui/material'
 import CircularProgress from '@mui/material/CircularProgress'
 
 export const HeaderRow = ({ children }) => (
@@ -39,7 +39,7 @@ export const HeaderCell = ({ children }) => (
   </Box>
 )
 
-export const DataCell = ({ children, color = 'inherit' }) => (
+export const DataCell = ({ children }) => (
   <Box
     sx={{
       textAlign: 'center',
@@ -49,14 +49,26 @@ export const DataCell = ({ children, color = 'inherit' }) => (
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      color: color,
     }}
   >
     {children}
   </Box>
 )
 
-export const DeleteCell = () => <DataCell color="red">X</DataCell>
+export const DeleteCell = ({ onClick, disabled }) => (
+  <DataCell>
+    <IconButton
+      sx={{
+        color: 'red',
+        '&.Mui-disabled': { opacity: 0.6, color: 'red' },
+      }}
+      onClick={() => onClick()}
+      disabled={disabled}
+    >
+      X
+    </IconButton>
+  </DataCell>
+)
 
 export const Loading = () => (
   <DataRow justifyContent="center">

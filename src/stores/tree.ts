@@ -32,6 +32,7 @@ export const initListeners = () => {
 export const deleteChild = async (id: string, childId: string) =>
   new Promise<void>((resolve) => {
     setTimeout(async () => {
+      console.log('DELETING ', childId)
       Node(id).setKey(
         'childIds',
         Node(id)
@@ -39,15 +40,15 @@ export const deleteChild = async (id: string, childId: string) =>
           .childIds.filter((cid) => cid !== childId)
       )
 
-      _deleteSubTree(childId)
+      await _deleteSubTree(childId)
 
       resolve()
     }, 0)
   })
 
-const _deleteSubTree = (rootId: string) => {
+const _deleteSubTree = async (rootId: string) => {
   const deletedIds: string[] = []
-  _collectTree(rootId, deletedIds)
+  await _collectTree(rootId, deletedIds)
   console.log('deletedIds', deletedIds)
   nodeIds.set(nodeIds.get().filter((cid) => !deletedIds.includes(cid)))
   deletedIds.forEach((cid) => {
@@ -55,11 +56,15 @@ const _deleteSubTree = (rootId: string) => {
   })
 }
 
-const _collectTree = (id: string, treeIds: string[] = []) => {
-  treeIds.push(id)
-  Node(id)
-    .get()
-    .childIds.forEach((childId) => {
-      _collectTree(childId, treeIds)
-    })
-}
+const _collectTree = async (id: string, treeIds: string[] = []) =>
+  new Promise<void>((resolve) => {
+    setTimeout(async () => {
+      treeIds.push(id)
+      await Promise.all(
+        Node(id)
+          .get()
+          .childIds.map((childId) => _collectTree(childId, treeIds))
+      )
+      resolve()
+    }, 0)
+  })

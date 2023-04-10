@@ -7,6 +7,7 @@ import { useStore } from '@nanostores/react'
 import { Node, rootNode } from 'stores/tree'
 import { HeaderRow, HeaderCell, DataRow, DataCell, DeleteCell, Loading } from 'components/Layout'
 import { useDeleteChild } from 'components/hooks'
+import { deletingChildIdAtom } from 'stores/state'
 
 const View = () => {
   const root = useStore(rootNode())
@@ -49,7 +50,8 @@ const Item = ({ id, onDelete, deleting }: ItemProps) => {
 }
 
 const TreeItemBody = ({ node }: TreeItemBodyProps) => {
-  const { deletingChildId, deleteChild } = useDeleteChild()
+  const deleteChild = useDeleteChild()
+  const deletingChildId = useStore(deletingChildIdAtom)
 
   return (
     <>
@@ -102,11 +104,9 @@ const TableRow = ({ id, onDelete }: RowProps) => {
 }
 
 const Delete = ({ onDelete }: DeleteProps) => {
-  return (
-    <div onClick={() => onDelete()}>
-      <DeleteCell />
-    </div>
-  )
+  const deletingChildId = useStore(deletingChildIdAtom)
+
+  return <DeleteCell onClick={onDelete} disabled={deletingChildId !== null} />
 }
 
 export default View

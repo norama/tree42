@@ -1,4 +1,5 @@
-import { useRef, useEffect, useState } from 'react'
+import { useRef, useEffect } from 'react'
+import { deletingChildIdAtom } from 'stores/state'
 import { deleteChild } from 'stores/tree'
 
 // https://developer.school/snippets/react/perform-an-action-when-component-is-mounted
@@ -17,20 +18,16 @@ export const useIsMounted = () => {
 
 export const useDeleteChild = () => {
   const isMounted = useIsMounted()
-  const [deletingChildId, setDeletingChildId] = useState<string | null>(null)
 
-  return {
-    deleteChild: async (id: string, childId: string) => {
-      if (!isMounted) {
-        return
-      }
-      setDeletingChildId(childId)
-      await deleteChild(id, childId)
-      if (!isMounted) {
-        return
-      }
-      setDeletingChildId(null)
-    },
-    deletingChildId,
+  return async (id: string, childId: string) => {
+    if (!isMounted || deletingChildIdAtom.get() !== null) {
+      return
+    }
+    deletingChildIdAtom.set(childId)
+    await deleteChild(id, childId)
+    if (!isMounted) {
+      return
+    }
+    deletingChildIdAtom.set(null)
   }
 }
